@@ -1,36 +1,89 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Developer Portfolio · Next.js App Router
 
-## Getting Started
+A responsive, animated portfolio for full-stack developers built on Next.js 16 (App Router), Tailwind CSS, Framer Motion, and MongoDB. All portfolio entities (skills, projects, experience, contact messages) are served through internal API routes that integrate with Mongoose models, with optional Cloudinary uploads for project imagery.
 
-First, run the development server:
+## ✨ Features
+
+- Modular sections: hero, about, skills, projects, experience, contact
+- Dark/light mode toggle powered by CSS variables + localStorage
+- Framer Motion animations, sticky navigation, smooth scrolling
+- Internal REST API routes (`/api/*`) backed by MongoDB via Mongoose
+- Cloudinary upload endpoint for project/asset management
+- Type-safe validation using Zod schemas
+
+## 🧰 Tech Stack
+
+- Next.js 16 · App Router · React 19
+- Tailwind CSS 3 · Framer Motion · lucide-react icons
+- MongoDB Atlas · Mongoose ODM
+- Cloudinary storage integration
+
+## 🚀 Getting Started
 
 ```bash
+git clone <repo-url>
+cd porfolio-ui
+cp .env.example .env.local
+# update credentials in .env.local
+
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Visit `http://localhost:3000`.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🔐 Environment Variables
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Key | Description |
+| --- | --- |
+| `MONGODB_URI` | MongoDB connection string |
+| `CLOUDINARY_CLOUD_NAME` | Cloudinary cloud identifier |
+| `CLOUDINARY_API_KEY` | Cloudinary API key |
+| `CLOUDINARY_API_SECRET` | Cloudinary API secret |
+| `NEXT_PUBLIC_BASE_URL` | Base URL used by server components when fetching internal APIs |
+| `NEXT_PUBLIC_ENABLE_ADMIN_LINK` | Optional. Set to `true` to show Admin shortcuts in nav/footer |
 
-## Learn More
+## 🌱 Seed Demo Content
 
-To learn more about Next.js, take a look at the following resources:
+Populate the database with sample records using the provided script:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+npm run seed
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+The script clears existing collections (`skills`, `projects`, `experience`, `contactmessages`) before inserting curated demo data.
 
-## Deploy on Vercel
+## 🛠 Internal API Routes
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+| Route | Methods | Description |
+| --- | --- | --- |
+| `/api/skills` | `GET`, `POST` | List skills or create a new record |
+| `/api/skills/:id` | `GET`, `PATCH`, `DELETE` | Retrieve, update, or delete a skill |
+| `/api/projects` | `GET`, `POST` | Manage projects catalogue |
+| `/api/projects/:id` | `GET`, `PATCH`, `DELETE` | Single project operations |
+| `/api/experience` | `GET`, `POST` | Experience timeline entries |
+| `/api/experience/:id` | `GET`, `PATCH`, `DELETE` | Individual experience record |
+| `/api/contact` | `POST` | Stores contact form submissions |
+| `/api/upload` | `POST` | Uploads a base64/image string to Cloudinary and returns the secure URL |
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+All routes return JSON responses with `{ data: ... }` envelopes on success and structured error payloads on failure. Validation is enforced with Zod schemas.
+
+## 🧾 Contact Form
+
+The contact section submits to `/api/contact`. Successful submissions persist to MongoDB. Customize notifications or email integration by extending `app/api/contact/route.ts`.
+
+## 📦 Deployment Notes
+
+- Set all environment variables on your hosting provider (Vercel, Render, etc.)
+- Ensure `NEXT_PUBLIC_BASE_URL` matches the deployed domain to keep server-side fetches pointing at the correct API origin
+- Only set `NEXT_PUBLIC_ENABLE_ADMIN_LINK=true` if you’re comfortable exposing the `/admin` entry point in navigation (the route itself remains available directly)
+- Configure Cloudinary CORS settings if using the upload endpoint from browsers
+
+## 📚 Next Steps
+
+- Add authentication & admin tools for managing content
+- Document the API via Swagger/OpenAPI
+- Integrate analytics (Plausible, GA4) for portfolio insights
+- Replace the placeholder `/public/resume.pdf` with your actual CV asset
+
+Happy shipping!
