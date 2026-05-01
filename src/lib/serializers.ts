@@ -115,7 +115,7 @@ export function serializeCertification(
 }
 
 export function serializeHeroContent(doc: HeroContentDocument): HeroContent {
-  const palette = doc.palette ?? {};
+  const palette = (doc.palette as any) || {};
   return {
     _id: doc._id.toString(),
     badge: doc.badge,

@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useCallback, useEffect, useMemo, useRef } from "react";
 import type { CSSProperties, PointerEvent as ReactPointerEvent } from "react";
@@ -45,8 +45,8 @@ type HeroSectionProps = {
 };
 
 type MotionTransformMap = Record<"primary" | "secondary" | "highlight", {
-  x: ReturnType<typeof useTransform>;
-  y: ReturnType<typeof useTransform>;
+  x: any;
+  y: any;
 }>;
 
 export function HeroSection({ content }: HeroSectionProps) {
@@ -65,7 +65,7 @@ export function HeroSection({ content }: HeroSectionProps) {
     };
   }, [accentValue, fallbackPalette.primary]);
 
-  const heroThemeStyle = useMemo<CSSProperties>(
+  const heroThemeStyle = useMemo<Record<string, any>>(
     () => ({
       "--hero-color-primary": derivedPalette.primary,
       "--hero-color-secondary": derivedPalette.secondary,
