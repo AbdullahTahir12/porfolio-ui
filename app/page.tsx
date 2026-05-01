@@ -9,6 +9,15 @@ import { SkillsSection } from "@/components/sections/SkillsSection";
 import { TestimonialsSection } from "@/components/sections/TestimonialsSection";
 import { fetchFromApi } from "@/src/lib/apiClient";
 import { CACHE_TAGS } from "@/src/lib/cacheTags";
+import {
+  getAboutContent,
+  getCertifications,
+  getExperience,
+  getFeatures,
+  getHeroContent,
+  getProjects,
+  getSkills,
+} from "@/src/lib/portfolioService";
 import { ABOUT_CONTENT_FALLBACK, FEATURES_FALLBACK, HERO_CONTENT_FALLBACK } from "@/src/lib/defaultContent";
 import type {
   AboutContent,
@@ -29,13 +38,13 @@ export default async function Home() {
     aboutContent,
     features,
   ] = await Promise.all([
-    safeFetch<Skill[]>("/api/skills", []),
-    safeFetch<Project[]>("/api/projects", []),
-    safeFetch<Experience[]>("/api/experience", []),
-    safeFetch<Certification[]>("/api/certifications", []),
-    safeFetch<HeroContent>("/api/hero", HERO_CONTENT_FALLBACK),
-    safeFetch<AboutContent>("/api/about", ABOUT_CONTENT_FALLBACK),
-    safeFetch<Feature[]>("/api/features", FEATURES_FALLBACK),
+    getSkills().catch(() => []),
+    getProjects().catch(() => []),
+    getExperience().catch(() => []),
+    getCertifications().catch(() => []),
+    getHeroContent().catch(() => HERO_CONTENT_FALLBACK),
+    getAboutContent().catch(() => ABOUT_CONTENT_FALLBACK),
+    getFeatures().catch(() => FEATURES_FALLBACK),
   ]);
 
   return (

@@ -10,6 +10,7 @@ import { WhatsAppButton } from "@/components/widgets/WhatsAppButton";
 import { fetchFromApi } from "@/src/lib/apiClient";
 import { CACHE_TAGS } from "@/src/lib/cacheTags";
 import { SITE_IDENTITY_FALLBACK } from "@/src/lib/defaultContent";
+import { getSiteIdentity } from "@/src/lib/portfolioService";
 import type { SiteIdentity } from "@/src/types/portfolio";
 
 import "./globals.css";
@@ -28,12 +29,7 @@ const siteUrl = process.env.NEXT_PUBLIC_BASE_URL ?? "http://localhost:3000";
 
 async function loadSiteIdentity(): Promise<SiteIdentity> {
   try {
-    return await fetchFromApi<SiteIdentity>("/api/site", {
-      revalidate: 180,
-      tags: [CACHE_TAGS.site],
-      fallbackData: SITE_IDENTITY_FALLBACK,
-      suppressError: true,
-    });
+    return await getSiteIdentity();
   } catch (error) {
     console.error("Failed to load site identity", error);
     return SITE_IDENTITY_FALLBACK;
