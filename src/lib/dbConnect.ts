@@ -7,11 +7,15 @@ declare global {
   } | undefined;
 }
 
-// Try to find MONGODB_URI even if there are trailing/leading spaces in the key name (common in manual Vercel config)
-const MONGODB_URI = process.env.MONGODB_URI || 
+let MONGODB_URI = process.env.MONGODB_URI || 
                     process.env["MONGODB_URI "] || 
                     process.env[" MONGODB_URI"] || 
                     process.env[" MONGODB_URI "];
+
+if (MONGODB_URI) {
+  // Remove any accidental leading '=' or whitespace from the value itself
+  MONGODB_URI = MONGODB_URI.trim().replace(/^=/, "").trim();
+}
 
 const cached = global.mongooseConnection ?? {
   conn: null,
