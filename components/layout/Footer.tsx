@@ -23,7 +23,7 @@ const SOCIAL_LINKS = [
   {
     id: "github",
     label: "GitHub",
-    href: "https://github.com/AbdullahTahir12",
+    href: "https://github.com/Abdullah-MERN7",
     icon: Github,
   },
   {
@@ -98,7 +98,7 @@ export function Footer({ siteIdentity }: FooterProps) {
         <div className="flex flex-col items-center gap-4 border-t border-surface pt-6 text-sm text-[color:var(--color-muted)] md:flex-row md:justify-between">
           <div className="footer-links" role="list">
             <a
-              href="https://github.com/AbdullahTahir12"
+              href="https://github.com/Abdullah-MERN7"
               target="_blank"
               rel="noreferrer"
               className="footer-link"
